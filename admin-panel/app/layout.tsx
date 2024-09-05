@@ -5,6 +5,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { ptBR } from '@clerk/localizations';
 
 import { ModalProvider } from '@/providers/modal-provider';
+import { ToasterProvider } from '@/providers/toast-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,8 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider localization={ptBR}>
-      <html lang="en">
+      <html lang="pt-br">
         <body>
+          <ToasterProvider />
           <ModalProvider />
           {children}
         </body>
