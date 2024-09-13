@@ -24,6 +24,7 @@ import { Input } from '@/components/ui/input';
 import toast from 'react-hot-toast';
 import { AlertModal } from '@/components/modals/alert-modal';
 import { ApiAlert } from '@/components/ui/api-alert';
+import { useOrigin } from '@/hooks/use-origin';
 
 interface ConfigFormProps {
   initialData: Store;
@@ -38,6 +39,7 @@ type ConfigFormValues = z.infer<typeof formSchema>;
 export const ConfigForm: React.FC<ConfigFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
+  const origin = useOrigin();
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,7 +52,7 @@ export const ConfigForm: React.FC<ConfigFormProps> = ({ initialData }) => {
   const onSubmit = async (data: ConfigFormValues) => {
     try {
       setLoading(true);
-      axios.patch(`/api/stores/${params.storeId}`, data);
+      await axios.patch(`/api/stores/${params.storeId}`, data);
       router.refresh();
       toast.success('Loja atualizada.');
     } catch (error) {

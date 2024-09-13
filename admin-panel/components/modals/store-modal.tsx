@@ -55,9 +55,7 @@ export const StoreModal = () => {
       title="Criar loja"
       description="Adicione uma nova loja para gerenciar seus produtos e categorias"
       isOpen={storeModal.isOpen}
-      onClose={() => {
-        storeModal.OnClose;
-      }}
+      onClose={storeModal.OnClose}
     >
       <div>
         <div className="space-y-4 py-2 pb-4">

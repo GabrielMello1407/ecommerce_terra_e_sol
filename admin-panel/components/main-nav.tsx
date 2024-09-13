@@ -18,6 +18,11 @@ export function MainNav({
       active: pathname === `/${params.storeId}`,
     },
     {
+      href: `/${params.storeId}/billboards`,
+      label: 'Painel de Controle',
+      active: pathname === `/${params.storeId}/billboards`,
+    },
+    {
       href: `/${params.storeId}/configuracoes`,
       label: 'Configuracoes',
       active: pathname === `/${params.storeId}/configuracoes`,
