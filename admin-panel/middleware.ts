@@ -1,13 +1,12 @@
-import { clerkMiddleware } from '@clerk/nextjs/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-export default clerkMiddleware();
+const publicApiRoute = createRouteMatcher(['/api/:path*']);
+
+export default clerkMiddleware((auth, req) => {});
 
 export const config = {
   matcher: [
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    '/painel-de-controle/(.*)', // Mantém o painel de controle
-    '/dashboard/:storeId/(.*)', // Rota específica da storeId
-    '/dashboard/(.*)', // Rotas do dashboard de forma geral
-    '/app/:path*', // Outras rotas da aplicação que precisam de autenticação
+    '/(api|trpc)(.*)',
   ],
 };

@@ -55,7 +55,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
   const toastMessage = initialData
     ? 'Painel de controle atualizado'
     : 'Painel de controle criado com sucesso.';
-  const action = initialData ? ' Mudanças salvas' : 'Criar';
+  const action = initialData ? ' Salvar mudanças' : 'Criar';
 
   const form = useForm<BillboardFormValues>({
     resolver: zodResolver(formSchema),
@@ -68,7 +68,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
   const onSubmit = async (data: BillboardFormValues) => {
     try {
       setLoading(true);
-      if (!initialData) {
+      if (initialData) {
         await axios.patch(
           `/api/${params.storeId}/billboards/${params.billboardId}`,
           data,
@@ -77,7 +77,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         await axios.post(`/api/${params.storeId}/billboards`, data);
       }
       router.refresh();
-      router.push(`/${params.storeId}/painel-de-controle`);
+      router.push(`/${params.storeId}/billboards`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error('Algo está errado.');
@@ -93,7 +93,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         `/api/${params.storeId}/billboards/${params.billboardId}`,
       );
       router.refresh();
-      router.push('/');
+      router.push(`/${params.storeId}/billboards`);
       toast.success('Painel deletado com sucesso!');
     } catch (error) {
       toast.error(
@@ -175,7 +175,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
           </Button>
         </form>
       </Form>
-      <Separator />
     </>
   );
 };

@@ -30,7 +30,7 @@ export const ApiAlert: React.FC<ApiAlertProps> = ({
     toast.success('Rota da API copiada para área de transferência!');
   };
   return (
-    <Alert>
+    <Alert className="mb-4">
       <Server className="h-4 w-4" />
       <AlertTitle className="flex items-center gap-x-2">
         {title}
