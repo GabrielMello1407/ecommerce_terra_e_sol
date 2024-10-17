@@ -15,7 +15,7 @@ interface CategoryPageProps {
     categoryId: string;
   };
   searchParams: {
-    colorId: String;
+    colorId: string;
     sizeId: string;
   };
 }
