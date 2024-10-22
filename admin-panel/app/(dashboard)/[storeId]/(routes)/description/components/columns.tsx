@@ -13,7 +13,7 @@ export type DescriptionsColumn = {
 export const columns: ColumnDef<DescriptionsColumn>[] = [
   {
     accessorKey: 'name',
-    header: 'Nome',
+    header: 'Tipo Tecido ou material',
   },
   {
     accessorKey: 'value',
