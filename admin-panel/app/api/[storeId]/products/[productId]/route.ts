@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     if (!params.productId) {
-      return new NextResponse('Id do pproduto é obrigatório', { status: 400 });
+      return new NextResponse('Id do produto é obrigatório', { status: 400 });
     }
 
     const product = await prismadb.product.findUnique({
@@ -20,6 +20,7 @@ export async function GET(
         category: true,
         size: true,
         color: true,
+        description: true,
       },
     });
 
@@ -44,6 +45,7 @@ export async function PATCH(
       categoryId,
       colorId,
       sizeId,
+      descriptionId,
       images,
       isFeatured,
       isArchived,
@@ -70,6 +72,9 @@ export async function PATCH(
     }
     if (!sizeId) {
       return new NextResponse('Id do tamanho é obrigatório', { status: 400 });
+    }
+    if (!descriptionId) {
+      return new NextResponse('Id da descrição é obrigatório', { status: 400 });
     }
     if (!images || !images.length) {
       return new NextResponse('Imagem é obrigatório', { status: 400 });
@@ -100,6 +105,7 @@ export async function PATCH(
         categoryId,
         colorId,
         sizeId,
+        descriptionId,
         storeId: params.storeId,
         images: {
           deleteMany: {},

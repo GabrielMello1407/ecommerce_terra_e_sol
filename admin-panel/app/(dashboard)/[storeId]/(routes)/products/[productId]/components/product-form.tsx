@@ -3,7 +3,14 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Category, Color, Image, Product, Size } from '@prisma/client';
+import {
+  Category,
+  Color,
+  Description,
+  Image,
+  Product,
+  Size,
+} from '@prisma/client';
 import { Trash } from 'lucide-react';
 
 import { Separator } from '@/components/ui/separator';
@@ -42,6 +49,7 @@ const formSchema = z.object({
   categoryId: z.string().min(1),
   colorId: z.string().min(1),
   sizeId: z.string().min(1),
+  descriptionId: z.string().min(5).optional(),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
 });
@@ -56,6 +64,7 @@ interface ProductFormProps {
     | null;
   categories: Category[];
   colors: Color[];
+  descriptions: Description[];
   sizes: Size[];
 }
 
@@ -63,6 +72,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   initialData,
   categories,
   colors,
+  descriptions,
   sizes,
 }) => {
   const params = useParams();
@@ -91,6 +101,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           price: 0,
           categoryId: '',
           colorId: '',
+          descriptionId: '',
           sizeId: '',
           isFeatured: false,
           isArchived: false,
@@ -277,6 +288,39 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       {sizes.map((size) => (
                         <SelectItem key={size.id} value={size.id}>
                           {size.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="descriptionId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Descrição</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger defaultValue={field.value}>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Selecione a descrição do produto"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {descriptions.map((description) => (
+                        <SelectItem key={description.id} value={description.id}>
+                          {description.name}
                         </SelectItem>
                       ))}
                     </SelectContent>

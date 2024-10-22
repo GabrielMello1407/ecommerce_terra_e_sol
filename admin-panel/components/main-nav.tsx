@@ -28,6 +28,11 @@ export function MainNav({
       active: pathname === `/${params.storeId}/categories`,
     },
     {
+      href: `/${params.storeId}/description`,
+      label: 'Descrição',
+      active: pathname === `/${params.storeId}/description`,
+    },
+    {
       href: `/${params.storeId}/sizes`,
       label: 'Tamanhos',
       active: pathname === `/${params.storeId}/sizes`,

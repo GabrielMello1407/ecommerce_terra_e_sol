@@ -16,6 +16,7 @@ export async function POST(
       categoryId,
       colorId,
       sizeId,
+      descriptionId,
       images,
       isFeatured,
       isArchived,
@@ -39,6 +40,9 @@ export async function POST(
     }
     if (!sizeId) {
       return new NextResponse('Id do tamanho é obrigatório', { status: 400 });
+    }
+    if (!descriptionId) {
+      return new NextResponse('Id da descrição é obrigatório', { status: 400 });
     }
     if (!images || !images.length) {
       return new NextResponse('Imagem é obrigatório', { status: 400 });
@@ -65,6 +69,7 @@ export async function POST(
         isFeatured,
         isArchived,
         categoryId,
+        descriptionId,
         colorId,
         sizeId,
         storeId: params.storeId,
@@ -91,6 +96,7 @@ export async function GET(
     const categoryId = searchParams.get('categoryId') || undefined;
     const colorId = searchParams.get('colorId') || undefined;
     const sizeId = searchParams.get('sizeId') || undefined;
+    const descriptionId = searchParams.get('descriptionId') || undefined;
     const isFeatured = searchParams.get('isFeatured');
 
     if (!params.storeId) {
@@ -102,6 +108,7 @@ export async function GET(
         storeId: params.storeId,
         categoryId,
         colorId,
+        descriptionId,
         sizeId,
         isFeatured: isFeatured ? true : undefined,
         isArchived: false,
@@ -110,6 +117,7 @@ export async function GET(
         images: true,
         category: true,
         color: true,
+        description: true,
         size: true,
       },
       orderBy: {
