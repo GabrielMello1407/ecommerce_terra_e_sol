@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Description, Size } from '@prisma/client';
+import { Description } from '@prisma/client';
 import { Trash } from 'lucide-react';
 
 import { Separator } from '@/components/ui/separator';
@@ -67,14 +67,14 @@ export const DescriptionsForm: React.FC<DescriptionFormProps> = ({
       setLoading(true);
       if (initialData) {
         await axios.patch(
-          `/api/${params.storeId}/descriptions/${params.sizeId}`,
+          `/api/${params.storeId}/descriptions/${params.descriptionId}`,
           data,
         );
       } else {
         await axios.post(`/api/${params.storeId}/descriptions`, data);
       }
       router.refresh();
-      router.push(`/${params.storeId}/descriptions`);
+      router.push(`/${params.storeId}/description`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error('Algo está errado.');
@@ -87,7 +87,7 @@ export const DescriptionsForm: React.FC<DescriptionFormProps> = ({
     try {
       setLoading(true);
       await axios.delete(
-        `/api/${params.storeId}/descriptions/${params.sizeId}`,
+        `/api/${params.storeId}/descriptions/${params.descriptionId}`,
       );
       router.refresh();
       router.push(`/${params.storeId}/descriptions`);

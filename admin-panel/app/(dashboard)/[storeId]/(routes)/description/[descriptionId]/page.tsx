@@ -6,7 +6,7 @@ const DescriptionsPage = async ({
 }: {
   params: { descriptionId: string };
 }) => {
-  const size = await prismadb.description.findUnique({
+  const description = await prismadb.description.findUnique({
     where: {
       id: params.descriptionId,
     },
@@ -15,7 +15,7 @@ const DescriptionsPage = async ({
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <DescriptionsForm initialData={size} />
+        <DescriptionsForm initialData={description} />
       </div>
     </div>
   );
