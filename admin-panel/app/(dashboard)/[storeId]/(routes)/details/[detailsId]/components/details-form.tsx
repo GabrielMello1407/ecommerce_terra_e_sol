@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Description } from '@prisma/client';
+import { Details } from '@prisma/client';
 import { Trash } from 'lucide-react';
 
 import { Separator } from '@/components/ui/separator';
@@ -32,15 +32,13 @@ const formSchema = z.object({
   value: z.string().min(1, 'Valor inválido'),
 });
 
-type DescriptionFormValues = z.infer<typeof formSchema>;
+type DetailsFormValues = z.infer<typeof formSchema>;
 
-interface DescriptionFormProps {
-  initialData: Description | null;
+interface DetailsFormProps {
+  initialData: Details | null;
 }
 
-export const DescriptionsForm: React.FC<DescriptionFormProps> = ({
-  initialData,
-}) => {
+export const DetailsForm: React.FC<DetailsFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
 
@@ -48,13 +46,13 @@ export const DescriptionsForm: React.FC<DescriptionFormProps> = ({
   const [loading, setLoading] = useState(false);
 
   const title = initialData ? 'Editar descrição' : 'Criar descrição';
-  const description = initialData ? 'Editar tamanhos' : 'Adicionar descrição';
+  const details = initialData ? 'Editar tamanhos' : 'Adicionar descrição';
   const toastMessage = initialData
     ? 'Descrição atualizada'
     : 'Descrição criada com sucesso.';
   const action = initialData ? ' Salvar mudanças' : 'Criar';
 
-  const form = useForm<DescriptionFormValues>({
+  const form = useForm<DetailsFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       name: '',
@@ -62,19 +60,19 @@ export const DescriptionsForm: React.FC<DescriptionFormProps> = ({
     },
   });
 
-  const onSubmit = async (data: DescriptionFormValues) => {
+  const onSubmit = async (data: DetailsFormValues) => {
     try {
       setLoading(true);
       if (initialData) {
         await axios.patch(
-          `/api/${params.storeId}/descriptions/${params.descriptionId}`,
+          `/api/${params.storeId}/details/${params.detailsId}`,
           data,
         );
       } else {
-        await axios.post(`/api/${params.storeId}/descriptions`, data);
+        await axios.post(`/api/${params.storeId}/details`, data);
       }
       router.refresh();
-      router.push(`/${params.storeId}/description`);
+      router.push(`/${params.storeId}/details`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error('Algo está errado.');
@@ -86,11 +84,9 @@ export const DescriptionsForm: React.FC<DescriptionFormProps> = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `/api/${params.storeId}/descriptions/${params.descriptionId}`,
-      );
+      await axios.delete(`/api/${params.storeId}/details/${params.detailsId}`);
       router.refresh();
-      router.push(`/${params.storeId}/descriptions`);
+      router.push(`/${params.storeId}/details`);
       toast.success('Tamanho deletado com sucesso!');
     } catch (error) {
       toast.error(
@@ -111,7 +107,7 @@ export const DescriptionsForm: React.FC<DescriptionFormProps> = ({
         loading={loading}
       />
       <div className="flex items-center justify-between">
-        <Heading title={title} description={description} />
+        <Heading title={title} description={details} />
         {initialData && (
           <Button
             variant={'destructive'}
@@ -152,7 +148,7 @@ export const DescriptionsForm: React.FC<DescriptionFormProps> = ({
               name="value"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Descrição do produto</FormLabel>
+                  <FormLabel>Detalhes do produto</FormLabel>
                   <FormControl>
                     <Textarea
                       disabled={loading}
