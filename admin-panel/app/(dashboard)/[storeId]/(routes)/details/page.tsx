@@ -5,7 +5,7 @@ import prismadb from '@/lib/prismadb';
 import { DetailsColumn } from './components/columns';
 import { DetailsClient } from './components/client';
 
-const DescriptionPage = async ({ params }: { params: { storeId: string } }) => {
+const DetailsPage = async ({ params }: { params: { storeId: string } }) => {
   const details = await prismadb.details.findMany({
     where: {
       storeId: params.storeId,
@@ -33,4 +33,4 @@ const DescriptionPage = async ({ params }: { params: { storeId: string } }) => {
   );
 };
 
-export default DescriptionPage;
+export default DetailsPage;

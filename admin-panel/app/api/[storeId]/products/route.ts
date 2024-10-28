@@ -17,6 +17,7 @@ export async function POST(
       colorId,
       sizeId,
       descriptionId,
+      detailsId,
       images,
       isFeatured,
       isArchived,
@@ -35,13 +36,16 @@ export async function POST(
     if (!categoryId) {
       return new NextResponse('Id da categoria é obrigatório', { status: 400 });
     }
-    if (!colorId) {
+    if (!colorId || !Array.isArray(colorId) || !colorId.length) {
       return new NextResponse('Id da cor é obrigatório', { status: 400 });
     }
-    if (!sizeId) {
+    if (!sizeId || !Array.isArray(sizeId) || !sizeId.length) {
       return new NextResponse('Id do tamanho é obrigatório', { status: 400 });
     }
     if (!descriptionId) {
+      return new NextResponse('Id da descrição é obrigatório', { status: 400 });
+    }
+    if (!detailsId) {
       return new NextResponse('Id da descrição é obrigatório', { status: 400 });
     }
     if (!images || !images.length) {
@@ -70,9 +74,15 @@ export async function POST(
         isArchived,
         categoryId,
         descriptionId,
-        colorId,
-        sizeId,
+        detailsId,
+
         storeId: params.storeId,
+        sizes: {
+          connect: sizeId.map((id) => ({ id })),
+        },
+        color: {
+          connect: colorId.map((id) => ({ id })),
+        },
         images: {
           createMany: {
             data: [...images.map((image: { url: string }) => image)],
@@ -97,6 +107,7 @@ export async function GET(
     const colorId = searchParams.get('colorId') || undefined;
     const sizeId = searchParams.get('sizeId') || undefined;
     const descriptionId = searchParams.get('descriptionId') || undefined;
+    const detailsId = searchParams.get('detailsId') || undefined;
     const isFeatured = searchParams.get('isFeatured');
 
     if (!params.storeId) {
@@ -107,9 +118,10 @@ export async function GET(
       where: {
         storeId: params.storeId,
         categoryId,
-        colorId,
+        color: colorId ? { some: { id: colorId } } : undefined,
+        sizes: sizeId ? { some: { id: sizeId } } : undefined,
         descriptionId,
-        sizeId,
+        detailsId,
         isFeatured: isFeatured ? true : undefined,
         isArchived: false,
       },
@@ -118,7 +130,8 @@ export async function GET(
         category: true,
         color: true,
         description: true,
-        size: true,
+        details: true,
+        sizes: true,
       },
       orderBy: {
         createdAt: 'desc',

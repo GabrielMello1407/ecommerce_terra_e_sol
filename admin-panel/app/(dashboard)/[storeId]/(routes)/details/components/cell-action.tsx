@@ -37,7 +37,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/details/${data.id}`);
       router.refresh();
-      toast.success('Tamanho deletado com sucesso!');
+      toast.success('Detalhe deletado com sucesso!');
     } catch (error) {
       toast.error(
         'Tenha certeza que removeu todas as categorias usando o painel de controle primeiro.',

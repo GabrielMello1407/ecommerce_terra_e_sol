@@ -18,7 +18,8 @@ export async function GET(
       include: {
         images: true,
         category: true,
-        size: true,
+        details: true,
+        sizes: true,
         color: true,
         description: true,
       },
@@ -43,9 +44,10 @@ export async function PATCH(
       name,
       price,
       categoryId,
+      descriptionId,
+      detailsId,
       colorId,
       sizeId,
-      descriptionId,
       images,
       isFeatured,
       isArchived,
@@ -67,13 +69,16 @@ export async function PATCH(
     if (!categoryId) {
       return new NextResponse('Id da categoria é obrigatório', { status: 400 });
     }
-    if (!colorId) {
-      return new NextResponse('Id da cor é obrigatório', { status: 400 });
+    if (!colorId || !colorId.length) {
+      return new NextResponse('Cor é obrigatório', { status: 400 });
     }
-    if (!sizeId) {
-      return new NextResponse('Id do tamanho é obrigatório', { status: 400 });
+    if (!sizeId || !sizeId.length) {
+      return new NextResponse('Tamanho é obrigatório', { status: 400 });
     }
     if (!descriptionId) {
+      return new NextResponse('Id da descrição é obrigatório', { status: 400 });
+    }
+    if (!detailsId) {
       return new NextResponse('Id da descrição é obrigatório', { status: 400 });
     }
     if (!images || !images.length) {
@@ -103,10 +108,17 @@ export async function PATCH(
         name,
         price,
         categoryId,
-        colorId,
-        sizeId,
         descriptionId,
+        detailsId,
         storeId: params.storeId,
+        sizes: {
+          set: [],
+          connect: sizeId.map((sizeId: string) => ({ id: sizeId })),
+        },
+        color: {
+          set: [],
+          connect: colorId.map((colorId: string) => ({ id: colorId })),
+        },
         images: {
           deleteMany: {},
         },

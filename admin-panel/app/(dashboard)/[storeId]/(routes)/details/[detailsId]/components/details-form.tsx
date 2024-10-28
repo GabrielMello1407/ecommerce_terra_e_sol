@@ -45,11 +45,11 @@ export const DetailsForm: React.FC<DetailsFormProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? 'Editar descrição' : 'Criar descrição';
-  const details = initialData ? 'Editar tamanhos' : 'Adicionar descrição';
+  const title = initialData ? 'Editar detalhes' : 'Criar detalhes';
+  const details = initialData ? 'Editar detalhes' : 'Adicionar detalhes';
   const toastMessage = initialData
-    ? 'Descrição atualizada'
-    : 'Descrição criada com sucesso.';
+    ? 'Detalhe atualizado'
+    : 'Detalhe criado com sucesso.';
   const action = initialData ? ' Salvar mudanças' : 'Criar';
 
   const form = useForm<DetailsFormValues>({
@@ -87,10 +87,10 @@ export const DetailsForm: React.FC<DetailsFormProps> = ({ initialData }) => {
       await axios.delete(`/api/${params.storeId}/details/${params.detailsId}`);
       router.refresh();
       router.push(`/${params.storeId}/details`);
-      toast.success('Tamanho deletado com sucesso!');
+      toast.success('Detalhes deletado com sucesso!');
     } catch (error) {
       toast.error(
-        'Tenha certeza que removeu todos os produtos usando o tamanhos primeiro.',
+        'Tenha certeza que removeu todos os produtos usando o detalhes primeiro.',
       );
     } finally {
       setLoading(false);
@@ -135,7 +135,7 @@ export const DetailsForm: React.FC<DetailsFormProps> = ({ initialData }) => {
                   <FormControl>
                     <Input
                       disabled={loading}
-                      placeholder="Nome do tamanho"
+                      placeholder="Nome do detalhe"
                       {...field}
                     />
                   </FormControl>
@@ -152,7 +152,7 @@ export const DetailsForm: React.FC<DetailsFormProps> = ({ initialData }) => {
                   <FormControl>
                     <Textarea
                       disabled={loading}
-                      placeholder="Descrição para o produto"
+                      placeholder="Detalhes do produto"
                       {...field}
                     />
                   </FormControl>

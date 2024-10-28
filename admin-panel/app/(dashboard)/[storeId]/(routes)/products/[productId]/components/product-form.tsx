@@ -7,6 +7,7 @@ import {
   Category,
   Color,
   Description,
+  Details,
   Image,
   Product,
   Size,
@@ -41,31 +42,36 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
+import MultiSelect from './multiple-select';
 
 const formSchema = z.object({
   name: z.string().min(1, 'O nome precisa pelo menos 1 caracter.'),
   images: z.object({ url: z.string() }).array(),
   price: z.coerce.number().min(1),
   categoryId: z.string().min(1),
-  colorId: z.string().min(1),
-  sizeId: z.string().min(1),
+  colorId: z.array(z.string().min(1)).min(1, 'Selecione pelo menos uma cor.'),
+  sizeId: z.array(z.string().min(1)).min(1, 'Selecione pelo menos um tamanho.'),
   descriptionId: z.string().min(5).optional(),
+  detailsId: z.string().min(5).optional(),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
 });
 
-type ProductFormValues = z.infer<typeof formSchema>;
+type ProductFormValues = z.infer<typeof formSchema> & {};
 
 interface ProductFormProps {
   initialData:
     | (Product & {
         images: Image[];
+        color: Color[];
+        sizes: Size[];
       })
     | null;
   categories: Category[];
-  colors: Color[];
   descriptions: Description[];
+  colors: Color[];
   sizes: Size[];
+  details: Details[];
 }
 
 export const ProductForm: React.FC<ProductFormProps> = ({
@@ -73,6 +79,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   categories,
   colors,
   descriptions,
+  details,
   sizes,
 }) => {
   const params = useParams();
@@ -94,15 +101,22 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       ? {
           ...initialData,
           price: parseFloat(String(initialData?.price)),
+          colorId: Array.isArray(initialData.color)
+            ? initialData.color.map((color) => color.id)
+            : [],
+          sizeId: Array.isArray(initialData.sizes)
+            ? initialData.sizes.map((size) => size.id)
+            : [],
         }
       : {
           name: '',
           images: [],
           price: 0,
           categoryId: '',
-          colorId: '',
+          colorId: [],
           descriptionId: '',
-          sizeId: '',
+          detailsId: '',
+          sizeId: [],
           isFeatured: false,
           isArchived: false,
         },
@@ -179,15 +193,17 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 <FormLabel>Imagens</FormLabel>
                 <FormControl>
                   <ImageUpload
-                    value={field.value.map((image) => image.url)}
+                    value={(field.value || []).map((image) => image.url)}
                     disable={loading}
                     onChange={(url) =>
-                      field.onChange([...field.value, { url }])
+                      field.onChange([...(field.value || []), { url }])
                     }
                     onRemove={(url) =>
-                      field.onChange([
-                        ...field.value.filter((current) => current.url !== url),
-                      ])
+                      field.onChange(
+                        (field.value || []).filter(
+                          (current) => current.url !== url,
+                        ),
+                      )
                     }
                     size="500px"
                   />
@@ -264,38 +280,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="sizeId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tamanho</FormLabel>
-                  <Select
-                    disabled={loading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger defaultValue={field.value}>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Selecione o tamanho do produto"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {sizes.map((size) => (
-                        <SelectItem key={size.id} value={size.id}>
-                          {size.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
             <FormField
               control={form.control}
@@ -329,12 +313,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
-              name="colorId"
+              name="detailsId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Cor</FormLabel>
+                  <FormLabel>Detalhes</FormLabel>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -345,14 +330,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       <SelectTrigger defaultValue={field.value}>
                         <SelectValue
                           defaultValue={field.value}
-                          placeholder="Selecione a cor do produto"
+                          placeholder="Selecione os detalhes para seu produto"
                         />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {colors.map((color) => (
-                        <SelectItem key={color.id} value={color.id}>
-                          {color.name}
+                      {details.map((details) => (
+                        <SelectItem key={details.id} value={details.id}>
+                          {details.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -361,6 +346,47 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="colorId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Cor</FormLabel>
+                  <MultiSelect
+                    options={colors.map((color) => ({
+                      value: color.id,
+                      label: color.name,
+                    }))}
+                    selectedValues={field.value || []}
+                    onChange={field.onChange}
+                    placeholder="Selecione as cores do produto"
+                  />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="sizeId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tamanho</FormLabel>
+                  <MultiSelect
+                    options={sizes.map((size) => ({
+                      value: size.id,
+                      label: size.name,
+                    }))}
+                    selectedValues={field.value || []}
+                    onChange={field.onChange}
+                    placeholder="Selecione os tamanhos do produto"
+                  />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="isFeatured"

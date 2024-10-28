@@ -22,8 +22,8 @@ export const DetailsClient: React.FC<DetailsClientProps> = ({ data }) => {
     <>
       <div className="flex items-center justify-between">
         <Heading
-          title={`Descrições (${data.length})`}
-          description="Gerencie sua loja com as descrições"
+          title={`Detalhes (${data.length})`}
+          description="Gerencie os detalhes de seus produtos"
         />
         <Button onClick={() => router.push(`/${params.storeId}/details/new`)}>
           <Plus className="mr-2 h-2 w-4" /> Adicionar novo
@@ -31,7 +31,7 @@ export const DetailsClient: React.FC<DetailsClientProps> = ({ data }) => {
       </div>
       <Separator />
       <DataTable searchKey="name" columns={columns} data={data} />
-      <Heading title="API" description="Chamadas da api para as descrições" />
+      <Heading title="API" description="Chamadas da api para as detalhes" />
       <Separator />
       <ApiList entityIdName="details" entityName="detailsId" />
     </>
