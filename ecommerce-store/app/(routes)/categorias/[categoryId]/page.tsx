@@ -41,8 +41,17 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
       </Container>
       <div className="px-4 sm:px-6 lg:px-8 pb-24">
         <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
-          <MobileFilters sizes={sizes} colors={colors} />
+          <MobileFilters
+            sizes={sizes}
+            colors={colors}
+            categories={category ? [category] : []}
+          />
           <div className="hidden lg:block">
+            <Filter
+              valueKey="categoryId"
+              name="Categorias"
+              data={category ? [category] : []}
+            />
             <Filter valueKey="sizeId" name="Tamanhos" data={sizes} />
             <Filter valueKey="colorId" name="Cores" data={colors} />
           </div>

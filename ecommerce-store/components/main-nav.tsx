@@ -1,38 +1,64 @@
 'use client';
 import { cn } from '@/lib/utlis';
-import { Category } from '@/types';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import React from 'react';
 
-interface MainNavProps {
-  data: Category[];
-}
-const MainNav: React.FC<MainNavProps> = ({ data }) => {
+export default function MainNav({
+  className,
+}: React.HTMLAttributes<HTMLElement>) {
   const pathname = usePathname();
+  const params = useParams();
 
-  const routes = data.map((route) => ({
-    href: `/categorias/${route.id}`,
-    label: route.name,
-    active: pathname === `/categorias/${route.id}`,
-  }));
+  const routes = [
+    { href: `/`, label: 'Ínicio', active: pathname === `/` },
+    {
+      href: `/produtos`,
+      label: 'Produtos',
+      active: pathname === `/produtos`,
+    },
+    {
+      href: `/orcamentos`,
+      label: 'Orçamentos',
+      active: pathname === `/orcamentos`,
+    },
+    {
+      href: `/sobre`,
+      label: 'Sobre',
+      active: pathname === `/${params.storeId}/sobre`,
+    },
+    {
+      href: `/contato`,
+      label: 'Contato',
+      active: pathname === `/${params.storeId}/contato`,
+    },
+  ];
 
   return (
-    <nav className="mx-6 flex items-center space-x-4 lg:space-x-6">
+    <nav
+      className={cn('flex justify-center items-center space-x-12', className)}
+    >
       {routes.map((route) => (
         <Link
           key={route.href}
           href={route.href}
           className={cn(
-            'text-sm font-medium transition-colors hover:black',
-            route.active ? 'text-black' : 'text-neutral-500',
+            'text-sm font-medium relative transition-colors',
+            route.active
+              ? 'text-[#025213] font-bold'
+              : 'text-[#14812C] hover:text-[#025213]',
           )}
+          style={{ textDecoration: 'none' }}
         >
           {route.label}
+          <span
+            className="absolute left-1/2 bottom-0 h-[2px] bg-[#025213] transition-all duration-300 ease-in-out transform -translate-x-1/2 origin-center"
+            style={{
+              width: route.active ? '100%' : '0',
+            }}
+          />
         </Link>
       ))}
     </nav>
   );
-};
-
-export default MainNav;
+}

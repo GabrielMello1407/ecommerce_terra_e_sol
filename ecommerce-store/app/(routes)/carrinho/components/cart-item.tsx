@@ -3,14 +3,18 @@
 import Currency from '@/components/ui/currency';
 import IconButton from '@/components/ui/icon-button';
 import useCart from '@/hooks/use-cart';
-import { Product } from '@/types';
+import { Product, Color, Size } from '@/types';
 import { X } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
 interface CartItemProps {
-  data: Product;
+  data: Product & {
+    selectedColor: Color | null;
+    selectedSize: Size | null;
+  };
 }
+
 const CartItem: React.FC<CartItemProps> = ({ data }) => {
   const cart = useCart();
 
@@ -23,8 +27,8 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
       <div className="relative h-24 w-24 rounded-md overflow-hidden sm:h-48 sm:w-48">
         <Image
           fill
-          src={data.images[0].url}
-          alt=""
+          src={data.images[0]?.url}
+          alt={data.name}
           className="object-cover object-center"
         />
       </div>
@@ -37,9 +41,13 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
             <p className="text-lg font-semibold text-black">{data.name}</p>
           </div>
           <div className="mt-1 flex text-sm">
-            <p className="text-gray-500">{data.color.name}</p>
+            {/* Exibir apenas a cor selecionada */}
+            <p className="text-gray-500">
+              Cor: {data.selectedColor?.name || 'Nenhuma cor selecionada'}
+            </p>
+            {/* Exibir apenas o tamanho selecionado */}
             <p className="text-gray-500 ml-4 border-l border-gray-200 pl-4">
-              {data.size.name}
+              Tamanho: {data.selectedSize?.name || 'Nenhum tamanho selecionado'}
             </p>
           </div>
           <Currency value={data.price} />

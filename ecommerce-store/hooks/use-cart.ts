@@ -16,12 +16,12 @@ const useCart = create(
     (set, get) => ({
       items: [],
       addItem: (data: Product) => {
-        const currentItems = get().items;
-        const existingItem = currentItems.find((item) => item.id === data.id);
+        // const currentItems = get().items;
+        // const existingItem = currentItems.find((item) => item.id === data.id);
 
-        if (existingItem) {
-          return toast('Item ja está no carrinho.');
-        }
+        // if (existingItem) {
+        //   return toast('Item ja está no carrinho.');
+        // }
 
         set({ items: [...get().items, data] });
         toast.success('Item adicionado ao carrinho.');

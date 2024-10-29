@@ -3,19 +3,18 @@
 import { Product } from '@/types';
 import Image from 'next/image';
 import IconButton from './icon-button';
-import { Expand, ShoppingCart } from 'lucide-react';
+import { Expand } from 'lucide-react';
 import Currency from './currency';
 import { useRouter } from 'next/navigation';
 import { MouseEventHandler } from 'react';
 import usePreviewModal from '@/hooks/use-preview-modal';
-import useCart from '@/hooks/use-cart';
 
 interface ProductCard {
   data: Product;
 }
 
 const ProductCard: React.FC<ProductCard> = ({ data }) => {
-  const cart = useCart();
+  // const cart = useCart();
   const previewModal = usePreviewModal();
   const router = useRouter();
 
@@ -28,10 +27,10 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
     previewModal.onOpen(data);
   };
 
-  const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.stopPropagation();
-    cart.addItem(data);
-  };
+  // const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
+  //   event.stopPropagation();
+  //   cart.addItem(data);
+  // };
   return (
     <div
       onClick={handleClick}
@@ -51,20 +50,20 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
               onClick={onPreview}
               icon={<Expand className="text-gray-600" size={20} />}
             />
-            <IconButton
-              onClick={onAddToCart}
-              icon={<ShoppingCart className="text-gray-600" size={20} />}
-            />
           </div>
         </div>
       </div>
       {/* {Description} */}
       <div>
-        <p className="font-semibold text-lg">{data.name}</p>
-        <p className="text-sm text-gray-500">{data.category.name}</p>
+        <p className="font-semibold text-lg font-roboto text-[#025213]">
+          {data.name}
+        </p>
+        <p className="text-sm text-gray-500 text-[#14812C]">
+          {data.category.name}
+        </p>
       </div>
       {/* Price */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between text-[#14812C]">
         <Currency value={data?.price} />
       </div>
     </div>

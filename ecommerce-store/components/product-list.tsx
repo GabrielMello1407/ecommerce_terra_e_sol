@@ -3,15 +3,29 @@ import NoResults from './ui/no-results';
 import ProductCard from './ui/product-card';
 
 interface ProductListProps {
-  title: string;
+  title?: string;
+  titletwo?: string;
   items: Product[];
 }
-const ProductList: React.FC<ProductListProps> = ({ title, items }) => {
+const ProductList: React.FC<ProductListProps> = ({
+  title,
+  titletwo,
+  items,
+}) => {
   return (
     <div className="space-y-4">
       <div className="flex justify-center">
-        <h3 className="font-bold text-3xl text-[#025213] underline font-kadwa">
+        <h3
+          className={`font-bold text-3xl text-[#025213] underline font-kadwa`}
+        >
           {title}
+        </h3>
+      </div>
+      <div className="flex w-full">
+        <h3
+          className={`font-bold text-3xl text-[#025213] underline font-kadwa`}
+        >
+          {titletwo}
         </h3>
       </div>
       {items.length === 0 && <NoResults />}
