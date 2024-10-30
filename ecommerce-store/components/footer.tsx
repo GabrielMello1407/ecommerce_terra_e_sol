@@ -94,7 +94,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Créditos */}
       <div className="bg-green-50 py-4">
         <p className="text-center text-xs text-green-900">
           2024 Todos direitos reservados ©. Desenvolvido por{' '}
