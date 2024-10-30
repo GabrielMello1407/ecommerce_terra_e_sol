@@ -1,4 +1,3 @@
-'use client';
 import { cn } from '@/lib/utlis';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
@@ -12,11 +11,7 @@ export default function MainNav({
 
   const routes = [
     { href: `/`, label: 'Ínicio', active: pathname === `/` },
-    {
-      href: `/produtos`,
-      label: 'Produtos',
-      active: pathname === `/produtos`,
-    },
+    { href: `/produtos`, label: 'Produtos', active: pathname === `/produtos` },
     {
       href: `/orcamentos`,
       label: 'Orçamentos',
@@ -36,7 +31,10 @@ export default function MainNav({
 
   return (
     <nav
-      className={cn('flex justify-center items-center space-x-12', className)}
+      className={cn(
+        'flex flex-col lg:flex-row lg:justify-center items-center lg:space-x-12 space-y-4 lg:space-y-0',
+        className,
+      )}
     >
       {routes.map((route) => (
         <Link
