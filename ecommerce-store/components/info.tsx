@@ -39,7 +39,7 @@ const Info: React.FC<InfoProps> = ({ data }) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-x-2">
-        <Decorator />
+        <Decorator width={5} height={25} />
         <h1 className="text-3xl font-bold text-[#025213] font-roboto">
           {data.name}
         </h1>
