@@ -1,10 +1,11 @@
 'use client';
 
 import Currency from '@/components/ui/currency';
+import Decorator from '@/components/ui/decorator';
 import IconButton from '@/components/ui/icon-button';
 import useCart from '@/hooks/use-cart';
 import { Product, Color, Size } from '@/types';
-import { X } from 'lucide-react';
+import { Trash2Icon } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
@@ -34,23 +35,26 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
       </div>
       <div className="relative ml-4 flex-1 flex-col justify-between sm:ml-6">
         <div className="absolute z-10 right-0 top-0">
-          <IconButton onClick={onRemove} icon={<X size={15} />} />
+          <IconButton onClick={onRemove} icon={<Trash2Icon size={15} />} />
         </div>
         <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
           <div className="flex justify-between">
-            <p className="text-lg font-semibold text-black">{data.name}</p>
+            <div className="flex justify-center">
+              <Decorator width={4} height={6} />
+              <p className="ml-1 text-lg font-semibold text-[#025213]">
+                {data.name}
+              </p>
+            </div>
           </div>
-          <div className="mt-1 flex text-sm">
-            {/* Exibir apenas a cor selecionada */}
+          <div className="mt-2 flex flex-col text-sm space-y-1">
+            <Currency value={data.price} />
             <p className="text-gray-500">
               Cor: {data.selectedColor?.name || 'Nenhuma cor selecionada'}
             </p>
-            {/* Exibir apenas o tamanho selecionado */}
-            <p className="text-gray-500 ml-4 border-l border-gray-200 pl-4">
+            <p className="text-gray-500">
               Tamanho: {data.selectedSize?.name || 'Nenhum tamanho selecionado'}
             </p>
           </div>
-          <Currency value={data.price} />
         </div>
       </div>
     </li>
