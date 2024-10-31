@@ -76,6 +76,7 @@ const Footer = () => {
           <p>+55 (43) 99679-8007</p>
           <p>+55 (43) 3527-1249</p>
           <p>Rua Paraná - 454, Centro, Jacarezinho - PR</p>
+          <p>CNPJ: 72.217.573-0001-82</p>
 
           {/* Formulário de Newsletter */}
           <form className="mt-4 flex">
