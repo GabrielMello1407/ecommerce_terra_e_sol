@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utlis';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 import React from 'react';
@@ -14,7 +14,7 @@ export default function MainNav({
     { href: `/produtos`, label: 'Produtos', active: pathname === `/produtos` },
     {
       href: `/orcamentos`,
-      label: 'Orçamentos',
+      label: 'Monte seu Modelo',
       active: pathname === `/orcamentos`,
     },
     {
