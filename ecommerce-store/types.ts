@@ -19,6 +19,7 @@ export interface Product {
   sizes: Size[];
   color: Color[];
   description: Description;
+  details: Details;
   images: Image[];
 }
 
@@ -37,9 +38,19 @@ export interface Description {
   name: string;
   value: string;
 }
+export interface Details {
+  id: string;
+  name: string;
+  value: string;
+}
 
 export interface Color {
   id: string;
   name: string;
   value: string;
+}
+// Defina isso em um arquivo separado, como types.ts
+export interface User {
+  id: string;
+  email: string;
 }

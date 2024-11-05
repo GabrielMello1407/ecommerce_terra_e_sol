@@ -77,9 +77,9 @@ export default function StoreSwitcher({
       <PopoverContent className="w-[200px] p-0">
         <Command>
           <CommandList>
-            <CommandInput placeholder="Procure sua loja..." />
+            {/* <CommandInput placeholder="Procure sua loja..." /> */}
             <CommandEmpty>Nenhuma loja encontrada</CommandEmpty>
-            <CommandGroup heading="Lojas">
+            <CommandGroup heading="Loja">
               {formattedItems.map((store) => (
                 <CommandItem
                   key={store.value}
@@ -102,7 +102,7 @@ export default function StoreSwitcher({
           </CommandList>
           <CommandSeparator />
           <CommandList>
-            <CommandGroup>
+            {/* <CommandGroup>
               <CommandItem
                 onSelect={() => {
                   setOpen(false);
@@ -112,7 +112,7 @@ export default function StoreSwitcher({
                 <PlusCircle className="mr-2 h-5 w-5" />
                 Criar Loja
               </CommandItem>
-            </CommandGroup>
+            </CommandGroup> */}
           </CommandList>
         </Command>
       </PopoverContent>
