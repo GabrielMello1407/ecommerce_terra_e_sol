@@ -90,24 +90,6 @@ const Contact: React.FC = () => {
             Enviar
           </Button>
         </form>
-
-        <h2 className="text-xl font-bold text-green-900 mt-8">
-          Assine nosso newsletter
-        </h2>
-
-        <form className="flex mt-2">
-          <Input
-            type="email"
-            placeholder="Digite seu email"
-            className="border border-gray-300 rounded-none rounded-l p-6 w-full"
-          />
-          <Button
-            type="submit"
-            className="bg-green-900 text-white font-bold px-4 rounded-l"
-          >
-            Inscrever
-          </Button>
-        </form>
       </div>
     </div>
   );
