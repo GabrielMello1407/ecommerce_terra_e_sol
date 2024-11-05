@@ -1,5 +1,6 @@
 import getProduct from '@/actions/get-product';
 import getProducts from '@/actions/get-products';
+import ProductDetails from '@/components/details';
 import Gallery from '@/components/gallery';
 import Info from '@/components/info';
 import ProductList from '@/components/product-list';
@@ -13,10 +14,10 @@ interface ProductPageProps {
 
 const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   const product = await getProduct(params.productId);
-
   const suggestedProduct = await getProducts({
     categoryId: product?.category?.id,
   });
+
   return (
     <div className="bg-white">
       <Container>
@@ -27,6 +28,12 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
               <Info data={product} />
             </div>
           </div>
+
+          <ProductDetails
+            name={product.details?.name}
+            value={product.details?.value}
+          />
+
           <hr className="my-10" />
           <ProductList title="Produtos Relacionados" items={suggestedProduct} />
         </div>
