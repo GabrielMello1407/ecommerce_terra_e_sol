@@ -77,21 +77,6 @@ const Footer = () => {
           <p>+55 (43) 3527-1249</p>
           <p>Rua Paraná - 454, Centro, Jacarezinho - PR</p>
           <p>CNPJ: 72.217.573-0001-82</p>
-
-          {/* Formulário de Newsletter */}
-          <form className="mt-4 flex">
-            <input
-              type="email"
-              placeholder="Assine nosso newsletter"
-              className="p-2 border border-gray-300 rounded-l-md text-sm focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="px-4 py-2 bg-green-900 text-white font-semibold rounded-r-md text-sm"
-            >
-              INSCREVER
-            </button>
-          </form>
         </div>
       </div>
 
