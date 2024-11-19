@@ -151,7 +151,6 @@ model Image {
 model Order {
   id         String      @id @default(uuid())
   storeId    String
-  userId     String
   store      Store       @relation("StoreToOrder", fields: [storeId], references: [id])
   orderItems OrderItem[]
   isPaid     Boolean     @default(false)
@@ -161,7 +160,6 @@ model Order {
   updatedAt  DateTime    @updatedAt
 
   @@index([storeId])
-  @@index([userId])
 }
 
 model OrderItem {
