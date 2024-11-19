@@ -8,6 +8,7 @@ import { ShoppingCart } from 'lucide-react';
 import Decorator from './ui/decorator';
 import useCart from '@/hooks/use-cart';
 import toast from 'react-hot-toast';
+import { useUser } from '@clerk/nextjs';
 
 interface InfoProps {
   data: Product;
@@ -19,11 +20,17 @@ interface CartItem extends Product {
 
 const Info: React.FC<InfoProps> = ({ data }) => {
   const cart = useCart();
+  const { isSignedIn } = useUser();
 
   const [selectedColor, setSelectedColor] = useState<Color | null>(null);
   const [selectedSize, setSelectedSize] = useState<Size | null>(null);
 
   const onAdd = () => {
+    if (!isSignedIn) {
+      toast('Você precisa estar logado para adicionar os itens ao carrinho.');
+      return;
+    }
+
     if (selectedColor && selectedSize) {
       const cartItem: CartItem = {
         ...data,
