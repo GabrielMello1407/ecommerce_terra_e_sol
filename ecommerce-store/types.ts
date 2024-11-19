@@ -22,6 +22,10 @@ export interface Product {
   details: Details;
   images: Image[];
 }
+export interface CartProduct extends Product {
+  selectedColor: Color | null;
+  selectedSize: Size | null;
+}
 
 export interface Image {
   id: string;
