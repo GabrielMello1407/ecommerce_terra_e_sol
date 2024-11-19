@@ -5,7 +5,8 @@ import Footer from '@/components/footer';
 import Navbar from '@/components/navbar';
 import ModalProvider from '@/providers/modal-provider';
 import ToastProvider from '@/providers/toast-provider';
-import { AuthProvider } from '@/providers/auth-provider';
+import { ClerkProvider } from '@clerk/nextjs';
+import { ptBR } from '@clerk/localizations';
 
 const font = Urbanist({ subsets: ['latin'] });
 
@@ -14,22 +15,22 @@ export const metadata: Metadata = {
   description: 'Fazemos a sua moda!',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={font.className}>
-        <AuthProvider>
+    <ClerkProvider localization={ptBR} signInUrl="/login" signUpUrl="/cadastro">
+      <html lang="en">
+        <body className={font.className}>
           <ModalProvider />
           <ToastProvider />
           <Navbar />
           {children}
           <Footer />
-        </AuthProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
