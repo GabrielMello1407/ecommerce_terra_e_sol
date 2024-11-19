@@ -5,17 +5,45 @@ import useCart from '@/hooks/use-cart';
 import CartItem from './components/cart-item';
 import Summary from './components/summary';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 const CartPage = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const searchParams = useSearchParams();
+  const success = searchParams.get('success');
+  const canceled = searchParams.get('canceled');
+
+  console.log('Success:', success);
+  console.log('Canceled:', canceled);
 
   const cart = useCart();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
   if (!isMounted) {
     return null;
+  }
+  if (success === 'true') {
+    return (
+      <div>
+        <h1>Pagamento bem-sucedido!</h1>
+        <p>Seu pagamento foi realizado com sucesso. Obrigado pela compra.</p>
+      </div>
+    );
+  }
+
+  if (canceled === '1') {
+    return (
+      <div>
+        <h1>Pagamento cancelado</h1>
+        <p>
+          Seu pagamento foi cancelado. Tente novamente mais tarde ou entre em
+          contato.
+        </p>
+      </div>
+    );
   }
 
   return (
