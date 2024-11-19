@@ -68,3 +68,50 @@ npm run dev
 npm run dev 
 O painel administrativo estará acessível em: http://localhost:3000
 A loja estará acessível em: http://localhost:3001
+
+# Variáveis de Ambiente
+## Painel Administrativo
+# Autenticação Clerk
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+
+# Banco de Dados
+DATABASE_URL=
+DIRECT_URL=
+
+# Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+
+# Stripe
+STRIPE_API_KEY=
+STRIPE_WEBHOOK_SECRET=
+FRONTEND_STORE_URL=http://localhost:3001
+
+## Loja do Cliente
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+
+# Banco de Dados
+DATABASE_URL=
+DIRECT_URL=
+
+# API do Painel Administrativo
+NEXT_PUBLIC_API_URL=http://localhost:3000/api/{sua-chave-api}
+
+# Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+
+# EmailJS
+NEXT_PUBLIC_PUBLIC_KEY=
+NEXT_PUBLIC_TEMPLATE_ID=
+NEXT_PUBLIC_SERVICE_ID=
