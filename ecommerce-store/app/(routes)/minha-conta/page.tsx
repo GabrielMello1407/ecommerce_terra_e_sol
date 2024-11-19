@@ -2,7 +2,7 @@ import NavbarAccount from './components/navbar';
 
 const MyAccount = () => {
   return (
-    <div>
+    <div className="h-full">
       <NavbarAccount />
     </div>
   );
